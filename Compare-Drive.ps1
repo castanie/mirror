@@ -3,7 +3,7 @@ function Get-NameLengthDate {
     param (
         [string] $Path
     )
-    return Get-ChildItem -Path $Path -Recurse -File | ForEach-Object { $_.Name + ':' + $_.Length + ':' + $_.LastWriteTime }  | Out-String;
+    return Get-ChildItem -Path $Path -Recurse -File | ForEach-Object { $_.Name + ':' + $_.Length + ':' + $_.LastWriteTime } | Out-String;
 }
 
 function Get-NameLengthHash {
@@ -24,4 +24,6 @@ $DifferenceString = Get-NameLengthDate -Path $DifferenceDrive;
 
 # ------------------------------ :
 
-Compare-Object -ReferenceObject $ReferenceString -DifferenceObject $DifferenceString;
+$NewLine = [System.Environment]::NewLine;
+
+Compare-Object -ReferenceObject $ReferenceString.Split($NewLine) -DifferenceObject $DifferenceString.Split($NewLine);
